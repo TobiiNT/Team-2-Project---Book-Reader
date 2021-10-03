@@ -52,7 +52,7 @@ Technologies:
 
 - HTML,CSS
 
-1. Task scheduling:
+2. Task scheduling:
 
 - October 3rd:
   - Complete Planning Phase
@@ -83,7 +83,7 @@ Technologies:
 - October 22nd:
   - Complete 2 external function:
 
-C.User Story/ Acceptance Test:
+3.User Story/ Acceptance Test:
 
 | User Story 1:
 - Authors can create and edit books, organized in chapters.
@@ -157,13 +157,13 @@ C.User Story/ Acceptance Test:
     - Table of contents for the ease of book traversal
     - Bookmarks and bookmarks traversal
 
-1. Quality of Conformance
+2. Quality of Conformance
 
 - During the Project Construction phase, the design specifications must be followed including:
   - The technologies proposed during the Planning Phase
   - The aspects and functions proposed during the Planning Phase
 
-C.Quality Control
+3. Quality Control
 
 - For controlling the quality of the project, reviews and tests are used throughout the Project Construction phase to check for flaws and inconsistency
 
@@ -187,7 +187,7 @@ Technical Risks:
 
 - There are unnecessary web browsers, fonts or devices to support
 
-1. Risk control
+2. Risk control
 
 Project Risks:
 
