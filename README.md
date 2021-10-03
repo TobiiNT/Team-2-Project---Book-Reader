@@ -14,7 +14,6 @@
 Computer Sciences Major
 
 
-1.
 ## **Project Background**
 
 - This project is conducted as a fulfillment for the course &quot;Computer Science Project&quot;, which is instructed by Assoc. Prof. Dr. Manuel Clavel.
@@ -23,7 +22,6 @@ Computer Sciences Major
 
 ##
 
-1.
 ## **Schedule and Resource estimation**
 
 1. Resources:
@@ -144,7 +142,6 @@ C.User Story/ Acceptance Test:
 - The app must display the bookmarked page when the reader clicks on the corresponding bookmark.
  |
 
-1.
 ## **Quality Planning**
 
 1. Quality of Design
@@ -172,7 +169,6 @@ C.Quality Control
 
 ##
 
-1.
 ## **Risk Management**
 
 1. Risk identification
