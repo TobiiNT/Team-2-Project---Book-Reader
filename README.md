@@ -55,9 +55,9 @@ Technologies:
 2. Task scheduling:
 
 - October 3rd:
-  - Complete Planning Phase
-  - Complete Researching for MERN and Javascript.
-  - Complete setting up developing environment locally on each member&#39;s computer
+  - Complete Planning Phase (Completed)
+  - Complete Researching for MERN and Javascript. (Completed)
+  - Complete setting up developing environment locally on each member&#39;s computer (Comleted)
   - Create sample API which can be called from Postman
 
 - October 6th:
