@@ -24,7 +24,7 @@ function MarkdownArea(props) {
         direction={orientation}
       >
         
-        <MarkdownPreview content={'*' + props.content + '*' } />
+        <MarkdownPreview content={props.content} />
       </Split>
     </div>
   );
