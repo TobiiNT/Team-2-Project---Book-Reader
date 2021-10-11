@@ -11,16 +11,14 @@ Task scheduling:
   - Complete server structure (COMPLETED)
   - Interact successfully between Client &amp; Server (COMPLETED)
 
-- October 10th:
+- October 12th:
   - 25% function: create and edit books (save book locally and online) (Truong + Bac)
   - Complete function: user can select book to read (select locally and online) ( Hao + Long + Phat )
   - Complete function: user can change the font and size of text (locally) ( Hao + Long + Phat )
 
-- October 12th:
+- October 14th:
   - 25% function: create and edit books (save book locally and online) ( Truong + Bac)
   - Complete function: user can select and copy regions of the text ( Hao + Long + Phat )
-
-- October 14th:
   - Complete function: organize books in chapters ( Truong + Bac)
   - 50% function: create and edit books (save book locally and online) ( Hao + Long + Phat )
 
