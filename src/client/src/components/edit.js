@@ -2,7 +2,6 @@ import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
-import { TextField } from "@material-ui/core";
 
 class Edit extends Component {
   // This is the constructor that stores the data.
@@ -113,12 +112,11 @@ class Edit extends Component {
           </div>
           <div className="form-group">
             <label>Content: </label>
-            <TextField
-              multiline={true}
-              type="text"
-              className="form-control"
-              value={this.state.book_content}
-              onChange={this.onChangeBookContent}
+            <input onclick = "Editor()"
+            type="text"
+            className="Editor"
+            value={this.state.book_content}
+            onChange={this.onChangeBookContent}             
             />
           </div>
         </form>

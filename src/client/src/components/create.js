@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
 // This will require to npm install axios
 import axios from 'axios';
-import { TextField } from "@material-ui/core";
+import Editor from "./editor.js"
 
 export default class Create extends Component {
   // This is the constructor that stores the data.
@@ -60,7 +60,6 @@ export default class Create extends Component {
       book_content: "",
     });
   }
-
   // This following section will display the form that takes the input from the user.
   render() {
     return (
@@ -94,12 +93,11 @@ export default class Create extends Component {
           </div>
           <div className="form-group">
             <label>Content: </label>
-            <TextField
-              multiline={true}
-              type="text"
-              className="form-control"
-              value={this.state.book_content}
-              onChange={this.onChangeBookContent}
+            <input onclick = "Editor()"
+            type="text"
+            className="Editor"
+            value={this.state.book_content}
+            onChange={this.onChangeBookContent}
             />
           </div>
           
