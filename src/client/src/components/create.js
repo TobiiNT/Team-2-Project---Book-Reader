@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
 // This will require to npm install axios
 import axios from 'axios';
-import { TextField } from "@material-ui/core";
+import CKEditor from './ckeditor.js';
 
 export default class Create extends Component {
   // This is the constructor that stores the data.
@@ -16,6 +16,7 @@ export default class Create extends Component {
     this.state = {
       book_title: "",
       book_author: "",
+      book_content:"",
     };
   }
 
@@ -32,9 +33,9 @@ export default class Create extends Component {
     });
   }
 
-  onChangeBookContent(e) {
+  onChangeBookContent(data) {
     this.setState({
-      book_content: e.target.value,
+      book_content: data,
     });
   }
 
@@ -60,7 +61,6 @@ export default class Create extends Component {
       book_content: "",
     });
   }
-
   // This following section will display the form that takes the input from the user.
   render() {
     return (
@@ -93,13 +93,9 @@ export default class Create extends Component {
             />
           </div>
           <div className="form-group">
-            <label>Content: </label>
-            <TextField
-              multiline={true}
-              type="text"
-              className="form-control"
-              value={this.state.book_content}
-              onChange={this.onChangeBookContent}
+            <CKEditor
+              content={this.state.book_content}
+              onChange={this.onChangeBookContent.bind(this)}
             />
           </div>
           
