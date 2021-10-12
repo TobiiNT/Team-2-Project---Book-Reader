@@ -2,7 +2,6 @@ import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
-import MarkdownArea from "./markdownarea";
 
 class Read extends Component {
   // This is the constructor that stores the data.
@@ -40,9 +39,7 @@ class Read extends Component {
       <div>
         <form>
           <div className="form-group">
-            <MarkdownArea 
-              content={this.state.book_content}
-            />
+            
           </div>
         </form>
       </div>
