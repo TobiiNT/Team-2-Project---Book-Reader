@@ -11,6 +11,14 @@ class CkEditor extends Component {
         };
       }
 
+      onChangeBookContent(data) {
+        this.setState({
+          book_content: data,
+        });
+
+        this.props.onChange(data);
+      }
+
     render() {
         return (
             <div className="App">
@@ -19,10 +27,7 @@ class CkEditor extends Component {
                     data= { this.props.content }
                     onChange={ ( event, editor ) => {
                         const data = editor.getData();
-                        console.log( { event, editor, data } );
-                        this.setState({
-                            book_content: data,
-                        });
+                        this.onChangeBookContent(data);
                     } }
                 />
             </div>

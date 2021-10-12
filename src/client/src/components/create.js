@@ -32,9 +32,9 @@ export default class Create extends Component {
     });
   }
 
-  onChangeBookContent(e) {
+  onChangeBookContent(data) {
     this.setState({
-      book_content: e.target.value,
+      book_content: data,
     });
   }
 
@@ -93,7 +93,8 @@ export default class Create extends Component {
           </div>
           <div className="form-group">
             <CKEditor
-              content="{this.state.book_content}"
+              content={this.state.book_content}
+              onChange={this.onChangeBookContent.bind(this)}
             />
           </div>
           
