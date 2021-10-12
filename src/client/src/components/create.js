@@ -16,6 +16,7 @@ export default class Create extends Component {
     this.state = {
       book_title: "",
       book_author: "",
+      book_content:"",
     };
   }
 
