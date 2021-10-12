@@ -38,9 +38,7 @@ class Read extends Component {
     return (
       <div>
         <form>
-          <div className="form-group">
-            
-          </div>
+        <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
         </form>
       </div>
     );
