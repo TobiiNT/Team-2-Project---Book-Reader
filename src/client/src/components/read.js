@@ -14,8 +14,25 @@ class Read extends Component {
       book_author: "",
       book_content: "",
       book_publishdate: "",
+      text_size: 0,
       books: [],
     };
+  }
+  
+  uploadTextSize() {
+    const newEditedbook = {
+      book_title: this.state.book_title,
+      book_author: this.state.book_author,
+      book_publishdate: this.state.book_publishdate,
+      book_content: this.state.book_content,
+      text_size: this.state.text_size,
+    };
+
+    axios
+      .post(
+        "http://localhost:5000/update/" + this.props.match.params.id,
+        newEditedbook
+      )
   }
   // This will get the book based on the id from the database.
   componentDidMount() {
@@ -27,6 +44,7 @@ class Read extends Component {
           book_author: response.data.book_author,
           book_content: response.data.book_content,
           book_publishdate: response.data.book_publishdate,
+          text_size: response.data.text_size,
         });
       })
       .catch(function (error) {
@@ -34,14 +52,61 @@ class Read extends Component {
       });
   }
 
+  increaseTextSize() {
+    axios
+      .get("http://localhost:5000/book/" + this.props.match.params.id)
+      .then((response) => {
+        var TextSize = response.data.text_size;
+        TextSize+=10;
+        this.setState({
+          text_size: TextSize,
+        });
+        this.uploadTextSize();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  decreaseTextSize() {
+    axios
+      .get("http://localhost:5000/book/" + this.props.match.params.id)
+      .then((response) => {
+        var TextSize = response.data.text_size;
+        TextSize-=10;
+        this.setState({
+          text_size: TextSize,
+        });
+        this.uploadTextSize();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  getTextSize() {
+    return ("--default-size "+toString(this.text_size));
+  }
+
   // This following section will display the update-form that takes the input from the user to update the data.
   render() {
     return (
       <div>
+        <div>
+          <button 
+          type="button"
+          onClick={() => {
+            this.increaseTextSize();
+          }}>+</button>
+          <button
+          type="button"
+          onClick={() => {
+            this.decreaseTextSize();
+          }}>-</button>
+        </div>
         <form>
           <div className="form-group">
-            <MarkdownArea 
-              content={this.state.book_content}
+            <MarkdownArea content={this.state.book_content} size={this.state.text_size}
             />
           </div>
         </form>

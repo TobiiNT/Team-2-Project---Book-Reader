@@ -5,7 +5,7 @@ import "../ultilities/prism-imports";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Tooltip } from "@material-ui/core";
 
-function MarkdownPreview({ content }) {
+function MarkdownPreview({ content , size }) {
   const [html, setHtml] = useState(getHtml(content));
   const handle = useFullScreenHandle();
 
@@ -16,6 +16,10 @@ function MarkdownPreview({ content }) {
   useEffect(() => {
     setHtml(getHtml(content));
   }, [content]);
+
+  function returnSize() {
+    return size;
+  }
 
   const handleFullScreen = () =>
     handle.active ? handle.exit() : handle.enter();
@@ -32,7 +36,7 @@ function MarkdownPreview({ content }) {
       </div>
       <FullScreen handle={handle} >
         <div
-          style={{whiteSpace: 'pre-line'}}
+          style={{whiteSpace: 'pre-line', fontSize: size,}}
           id="preview"
           className={`html-div ${handle.active ? "preview-fullscreen" : ""}`}
           dangerouslySetInnerHTML={{ __html: html }}></div>

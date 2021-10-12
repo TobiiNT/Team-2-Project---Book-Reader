@@ -33,6 +33,7 @@ bookRoutes.route("/book/:id").get(function (req, res) {
       .findOne(myquery, function (err, result) {
         if (err) throw err;
         res.json(result);
+        console.log(result);
       });
 });
 
@@ -44,6 +45,7 @@ bookRoutes.route("/book/add").post(function (req, response) {
     book_author: req.body.book_author,
     book_publishdate: new Date(),
     book_content: req.body.book_content,
+    text_size: 10,
   };
   db_connect.collection("books").insertOne(myobj, function (err, res) {
     if (err) throw err;
@@ -61,6 +63,7 @@ bookRoutes.route("/update/:id").post(function (req, response) {
       book_author: req.body.book_author,
       book_publishdate: req.body.book_publishdate,
       book_content: req.body.book_content,
+      text_size: req.body.text_size,
     },
   };
   db_connect
