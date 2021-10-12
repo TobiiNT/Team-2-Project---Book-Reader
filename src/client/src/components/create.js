@@ -1,7 +1,7 @@
 import React, { Component} from "react";
 // This will require to npm install axios
 import axios from 'axios';
-import Editor from "./editor.js"
+import CKEditor from './ckeditor.js';
 
 export default class Create extends Component {
   // This is the constructor that stores the data.
@@ -92,12 +92,8 @@ export default class Create extends Component {
             />
           </div>
           <div className="form-group">
-            <label>Content: </label>
-            <input onclick = "Editor()"
-            type="text"
-            className="Editor"
-            value={this.state.book_content}
-            onChange={this.onChangeBookContent}
+            <CKEditor
+              content="{this.state.book_content}"
             />
           </div>
           
