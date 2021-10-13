@@ -2,7 +2,6 @@ import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
-import MarkdownArea from "./markdownarea";
 
 class Read extends Component {
   // This is the constructor that stores the data.
@@ -32,22 +31,32 @@ class Read extends Component {
       .catch(function (error) {
         console.log(error);
       });
-  }
 
-  // This following section will display the update-form that takes the input from the user to update the data.
+      
+  }
   render() {
+    if (!(this.props.match.params.id in localStorage)) {
+      localStorage.setItem(this.props.match.params.id, "0px");
+    } 
+    let st = localStorage.getItem(this.props.match.params.id);
+    console.log(st);
     return (
-      <div>
-        <form>
-          <div className="form-group">
-            <MarkdownArea 
-              content={this.state.book_content}
-            />
+      <div ref={(e) => this.func6(st, e)} onScroll={(e) => this.func5(this.props.match.params.id, e)} style={{overflow:"scroll", height:"45vw"}} id="contain" >
+          <div className="form-group" id="read" style={{fontSize:"50px",fontFamily:"Calibri"}}>
+            <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
           </div>
-        </form>
       </div>
     );
   }
+  func6(st){
+    document.getElementById('contain').scrollTop = st;
+  }
+  func5 (id) {
+    var ele = document.getElementById('contain');
+    localStorage.setItem(id, ele.scrollTop);
+    console.log(ele.scrollTop);
+  }
+  
 }
 
 // You can get access to the history object's properties and the closest <Route>'s match via the withRouter
