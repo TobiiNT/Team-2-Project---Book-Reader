@@ -15,9 +15,9 @@ export default class Create extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      book_title: "",
-      book_author: "",
-      book_content:"",
+      book_title: localStorage.getItem('draft-title'),
+      book_author: localStorage.getItem('draft-author'),
+      book_content: localStorage.getItem('draft-content'),
     };
   }
 
@@ -26,18 +26,24 @@ export default class Create extends Component {
     this.setState({
       book_title: e.target.value,
     });
+
+    localStorage.setItem('draft-title', e.target.value);
   }
 
   onChangeBookAuthor(e) {
     this.setState({
       book_author: e.target.value,
     });
+
+    localStorage.setItem('draft-author', e.target.value);
   }
 
   onChangeBookContent(data) {
     this.setState({
       book_content: data,
     });
+
+    localStorage.setItem('draft-content', data);
   }
 
 // This function will handle the submission.
@@ -61,6 +67,10 @@ export default class Create extends Component {
       book_author: "",
       book_content: "",
     });
+
+    localStorage.removeItem('draft-title');
+    localStorage.removeItem('draft-author');
+    localStorage.removeItem('draft-content');
   }
   // This following section will display the form that takes the input from the user.
   render() {
