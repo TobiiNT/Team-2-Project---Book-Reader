@@ -6,15 +6,19 @@
 
 #right_pane{
     flex: 1;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     border: 1px solid grey;
+    padding: 20px; 
+    width: 300px;
+    min-height: 600px;
+    word-wrap: break-word;
 }
 
 #editor_textarea{
     flex: 1;
     font-size: 18px;
-    resize: both;
+    resize: inherit;
     overflow: auto;
 }
 
@@ -25,5 +29,7 @@
     border: 1px solid grey;
     resize: both;
     overflow: auto;
-
+    padding: 20px; 
+    width: 300px;
+    min-height: 600px;
 }
