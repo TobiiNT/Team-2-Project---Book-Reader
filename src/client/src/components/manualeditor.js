@@ -49,7 +49,7 @@ class ManualEditor extends Component {
   
     insertBold(event) { this.insertTag(event, "b"); }
     insertItalic(event) { this.insertTag(event, "i"); }
-    insertUnderline(event) { this.insertTag(event, "ui"); }
+    insertUnderline(event) { this.insertTag(event, "u"); }
     insertFootnode(event) {
         this.insertTag(event, "a href");
     }
@@ -73,55 +73,47 @@ class ManualEditor extends Component {
   
     render() {
       return (
-        <div className="App">
-          <div id="left_pane">
-            <div id="editor_controls">
-              <div className="inner">
+        <div className="App" id="page_container"> 
+        <div id="left_pane">
+        <span id="editor_controls">
                 <button type="submit" onClick={(event) => this.preview(event)}>
                   Preview
                 </button>
-              </div>
-              <div className="inner">
                 <button
                   type="submit"
                   onClick={(event) => this.insertBold(event)}
                 >
                   Bold
                 </button>
-              </div>
-              <div className="inner">
                 <button
                   type="submit"
                   onClick={(event) => this.insertItalic(event)}
                 >
                   Italic
                 </button>
-              </div>
-              <div className="inner">
                 <button
                   type="submit"
                   onClick={(event) => this.insertUnderline(event)}
                 >
                   Underline
                 </button>
-              </div>
-              <div className="inner">
                 <button
                   type="submit"
                   onClick={(event) => this.insertFootnode(event)}
                 >
                   Footnote
                 </button>
-              </div>
-            </div>
-            <textarea
+              </span>
+          
+              <textarea
               id="editor_textarea"
               placeholder="Type in your text here"
               value={this.props.book_content}
               onChange={(event) => this.onChangeBookContent(event.target.value)}
             ></textarea>
+
           </div>
-  
+ 
           <div id="right_pane"></div>
         </div>
       );
