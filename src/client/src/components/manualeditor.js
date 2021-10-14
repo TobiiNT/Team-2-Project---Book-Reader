@@ -7,12 +7,13 @@ class ManualEditor extends Component {
   
       this.state = {
         book_content: props.content,
+        html_display: ''
       };
     }
   
     onChangeBookContent(event, content) {
         this.setState({
-          textareaValue: content
+            book_content: content
         })
 
         this.preview(event);
@@ -43,13 +44,19 @@ class ManualEditor extends Component {
       text_to_render = text_to_render.replace(/<style>/g, "");
       text_to_render = text_to_render.replace(/<\/style>/g, "");
     
-      let render_div = document.getElementById("right_pane");
+      //let render_div = document.getElementById("right_pane");
     
-      render_div.innerHTML = text_to_render;
+    console.log(text_to_render);
+
+      //render_div.innerHTML = 
+
+        this.setState({
+            html_display: '<html><body>' + text_to_render +  '</body></html>'
+        })
     }
   
-    insertBold(event) { this.insertTag(event, "b"); }
-    insertItalic(event) { this.insertTag(event, "i"); }
+    insertBold(event) { this.insertTag(event, "strong"); }
+    insertItalic(event) { this.insertTag(event, "em"); }
     insertUnderline(event) { this.insertTag(event, "u"); }
     insertFootnode(event) {
         this.insertTag(event, "a href");
@@ -107,12 +114,12 @@ class ManualEditor extends Component {
               id="editor_textarea"
               placeholder="Type in your text here"
               value={this.props.book_content}
+              rows='10'
               onChange={(event) => this.onChangeBookContent(event, event.target.value)}
             ></textarea>
 
           </div>
- 
-          <div id="right_pane"></div>
+          <iframe srcDoc={this.state.html_display} />
         </div>
       );
     }
