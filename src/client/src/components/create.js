@@ -1,7 +1,8 @@
 import React, { Component} from "react";
 // This will require to npm install axios
 import axios from 'axios';
-import CKEditor from './ckeditor.js';
+import ManualEditor from './manualeditor.js';
+import "./App.css";
 
 export default class Create extends Component {
   // This is the constructor that stores the data.
@@ -64,6 +65,8 @@ export default class Create extends Component {
   // This following section will display the form that takes the input from the user.
   render() {
     return (
+
+      
       <div style={{ marginTop: 20 }} >
         <h3 align="center">Upload new book</h3>
         <form onSubmit={this.onSubmit}>
@@ -93,7 +96,7 @@ export default class Create extends Component {
             />
           </div>
           <div className="form-group">
-            <CKEditor
+            <ManualEditor
               content={this.state.book_content}
               onChange={this.onChangeBookContent.bind(this)}
             />

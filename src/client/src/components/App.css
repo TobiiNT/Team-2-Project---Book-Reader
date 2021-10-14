@@ -1,0 +1,24 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#page_container{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#left_pane, #right_pane{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+}
+
+#editor_textarea{
+    flex: 1;
+    font-size: 18px;
+    resize: none;
+}
