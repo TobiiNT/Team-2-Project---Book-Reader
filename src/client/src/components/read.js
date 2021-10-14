@@ -38,7 +38,7 @@ class Read extends Component {
     return (
       <div>
         <form>
-        <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
+        <iframe width="100%" height="100%" srcDoc={this.state.book_content} />
         </form>
       </div>
     );
