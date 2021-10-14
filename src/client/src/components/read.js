@@ -38,7 +38,7 @@ class Read extends Component {
     if (!(this.props.match.params.id in localStorage)) {
       var obj = {
         "scroll": "0px",
-        "font_size": 100,
+        "font_size": 64,
         "font": "Calibri"};
       localStorage.setItem(this.props.match.params.id, JSON.stringify(obj));
     } 
