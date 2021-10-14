@@ -10,11 +10,12 @@ class ManualEditor extends Component {
       };
     }
   
-    onChangeBookContent(content) {
+    onChangeBookContent(event, content) {
         this.setState({
           textareaValue: content
         })
 
+        this.preview(event);
         this.props.onChange(content);
       }
   
@@ -68,7 +69,7 @@ class ManualEditor extends Component {
       if (tag_name != null)
         editor_textarea.setRangeText(`<${tag_name}>${selection}</${tag_name}>`);
 
-        this.onChangeBookContent(editor_textarea.value);
+        this.onChangeBookContent(event, editor_textarea.value);
     }
   
     render() {
@@ -76,9 +77,6 @@ class ManualEditor extends Component {
         <div className="App" id="page_container"> 
         <div id="left_pane">
         <span id="editor_controls">
-                <button type="submit" onClick={(event) => this.preview(event)}>
-                  Preview
-                </button>
                 <button
                   type="submit"
                   onClick={(event) => this.insertBold(event)}
@@ -109,7 +107,7 @@ class ManualEditor extends Component {
               id="editor_textarea"
               placeholder="Type in your text here"
               value={this.props.book_content}
-              onChange={(event) => this.onChangeBookContent(event.target.value)}
+              onChange={(event) => this.onChangeBookContent(event, event.target.value)}
             ></textarea>
 
           </div>
