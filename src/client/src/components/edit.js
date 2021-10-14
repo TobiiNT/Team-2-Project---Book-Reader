@@ -2,7 +2,7 @@ import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
-import { TextField } from "@material-ui/core";
+import CKEditor from "./ckeditor.js";
 
 class Edit extends Component {
   // This is the constructor that stores the data.
@@ -113,12 +113,9 @@ class Edit extends Component {
           </div>
           <div className="form-group">
             <label>Content: </label>
-            <TextField
-              multiline={true}
-              type="text"
-              className="form-control"
-              value={this.state.book_content}
-              onChange={this.onChangeBookContent}
+          <CKEditor
+              content={this.state.book_content}
+              onChange={this.onChangeBookContent.bind(this)}
             />
           </div>
         </form>

@@ -2,7 +2,6 @@ import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
-import MarkdownArea from "./markdownarea";
 
 class Read extends Component {
   // This is the constructor that stores the data.
@@ -14,25 +13,8 @@ class Read extends Component {
       book_author: "",
       book_content: "",
       book_publishdate: "",
-      text_size: 0,
       books: [],
     };
-  }
-  
-  uploadTextSize() {
-    const newEditedbook = {
-      book_title: this.state.book_title,
-      book_author: this.state.book_author,
-      book_publishdate: this.state.book_publishdate,
-      book_content: this.state.book_content,
-      text_size: this.state.text_size,
-    };
-
-    axios
-      .post(
-        "http://localhost:5000/update/" + this.props.match.params.id,
-        newEditedbook
-      )
   }
   // This will get the book based on the id from the database.
   componentDidMount() {
@@ -44,74 +26,80 @@ class Read extends Component {
           book_author: response.data.book_author,
           book_content: response.data.book_content,
           book_publishdate: response.data.book_publishdate,
-          text_size: response.data.text_size,
         });
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
-
-  increaseTextSize() {
-    axios
-      .get("http://localhost:5000/book/" + this.props.match.params.id)
-      .then((response) => {
-        var TextSize = response.data.text_size;
-        TextSize+=10;
-        this.setState({
-          text_size: TextSize,
-        });
-        this.uploadTextSize();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  decreaseTextSize() {
-    axios
-      .get("http://localhost:5000/book/" + this.props.match.params.id)
-      .then((response) => {
-        var TextSize = response.data.text_size;
-        TextSize-=10;
-        this.setState({
-          text_size: TextSize,
-        });
-        this.uploadTextSize();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  getTextSize() {
-    return ("--default-size "+toString(this.text_size));
   }
 
   // This following section will display the update-form that takes the input from the user to update the data.
   render() {
+    if (!(this.props.match.params.id in localStorage)) {
+      var obj = {
+        "scroll": "0px",
+        "font_size": 100,
+        "font": "Calibri"};
+      localStorage.setItem(this.props.match.params.id, JSON.stringify(obj));
+    } 
+    let data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+    let st = data.scroll;
+    let font = data.font;
+    let font_size=data.font_size;
     return (
+    <div>
       <div>
         <div>
-          <button 
-          type="button"
-          onClick={() => {
-            this.increaseTextSize();
-          }}>+</button>
-          <button
-          type="button"
-          onClick={() => {
-            this.decreaseTextSize();
-          }}>-</button>
+          <button type="button" onClick={() => this.updateFont( "Times New Roman")}>TimesNewRoman</button>
+          <button type="button" onClick={() => this.updateFont( "Calibri")}>Calibri</button>
+          <span style={{float:"right"}}>
+            <button type="button" align="right" onClick={() => this.upTextSize()}><b>+</b></button>
+            <button type="button" align="right" onClick={() => this.downTextSize()}><b>-</b></button>
+          </span>
         </div>
-        <form>
-          <div className="form-group">
-            <MarkdownArea content={this.state.book_content} size={this.state.text_size}
-            />
-          </div>
-        </form>
       </div>
+      <div ref={(e) => this.setScrollTop(st, e)} onScroll={(e) => this.updateScrollTop(this.props.match.params.id, e)} style={{overflow:"scroll", height:"45vw"}} id="contain" >
+          
+          <div className="form-group" id="read" style={{fontSize:font_size,fontFamily:font}}>
+            <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
+          </div>
+      </div>
+    </div>
     );
+  }
+  setScrollTop (st){
+    document.getElementById('contain').scrollTop = st;
+  }
+  updateScrollTop (id) {
+    var ele = document.getElementById('contain');
+    var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+    data.scroll = ele.scrollTop;
+    localStorage.setItem(id, JSON.stringify(data));
+  }
+  updateFont (font) {
+    var ele = document.getElementById('read');
+    ele.style.fontFamily = font;
+    var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+    data.font = font;
+    localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
+  }
+  
+  upTextSize () {
+    var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+    data.font_size *= 2;
+    var ele = document.getElementById('read');
+    ele.style.fontSize = data.font_size;
+    localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
+    window.location.reload();
+  }
+
+  downTextSize () {
+    var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+    data.font_size *= 0.5;
+    var ele = document.getElementById('read');
+    ele.style.fontSize = data.font_size;
+    localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
+    window.location.reload();
   }
 }
 
