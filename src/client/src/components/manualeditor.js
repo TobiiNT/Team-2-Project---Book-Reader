@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import "./App.css";
-
 class ManualEditor extends Component {
     constructor(props) {
       super(props);
@@ -83,29 +82,25 @@ class ManualEditor extends Component {
         <div className="App" id="page_container"> 
         <div id="left_pane">
         <span id="editor_controls">
-                <button
+                <button id ="bold"
                   type="submit"
                   onClick={(event) => this.insertBold(event)}
                 >
-                  Bold
                 </button>
-                <button
+                <button id ="italics"
                   type="submit"
                   onClick={(event) => this.insertItalic(event)}
                 >
-                  Italic
                 </button>
-                <button
+                <button id ="under"
                   type="submit"
                   onClick={(event) => this.insertUnderline(event)}
                 >
-                  Underline
                 </button>
-                <button
+                <button id ="footnote"
                   type="submit"
                   onClick={(event) => this.insertFootnode(event)}
                 >
-                  Footnote
                 </button>
               </span>
           
