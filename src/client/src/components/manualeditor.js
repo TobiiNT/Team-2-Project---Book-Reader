@@ -8,6 +8,10 @@ class ManualEditor extends Component {
             content: props.content,
             html_display: ''
         };
+
+        let Regex = new RegExp('(?<=[)(.*?)(?=])');
+        var myArray = this.state.content.match(Regex);
+        console.log(myArray);
     }
 
     onChangeBookContent(event, content) {
@@ -59,27 +63,18 @@ class ManualEditor extends Component {
     insertFootnode(event) {
         event.preventDefault();
 
-        var reference = prompt("Enter reference: ");
-
+        var refID = prompt("Enter reference ID: ");
+        var reftext = prompt("Enter reference text: ");
+        
         let editor_textarea = document.getElementById("editor_textarea");
 
-        let selection = null;
+        if (editor_textarea.selectionStart !== editor_textarea.selectionEnd) {
+            let selection = editor_textarea.value.slice(editor_textarea.selectionStart, editor_textarea.selectionEnd);
 
-        if (editor_textarea.selectionStart === editor_textarea.selectionEnd)
-            selection = editor_textarea.selectionStart;
-        else
-            selection = editor_textarea.value.slice(editor_textarea.selectionStart, editor_textarea.selectionEnd);
-
-        if (selection.length > 0) {
-            <a href="#cite_note-9">[7]</a>
-            var refID = 1;
-
-            editor_textarea.setRangeText(selection + "<a id=\"reflink-" + refID + "\" href=\"#refid-" + refID + "\">[" + refID + "]</a>");
-            editor_textarea.value += "\r\n<li id=\"refid-" + refID + "\"> [" + refID + "<a href=\"reflink-" + refID + "\">^</a>]" + reference + "</li>";
-
-
+            editor_textarea.setRangeText(selection + "<a id=\"reflink-" + refID + "\" href=\"#refid-" + refID + "\"><sup>[" + refID + "]</sup></a>");
+            editor_textarea.value += "\r\n<li id=\"refid-" + refID + "\"> [<a href=\"reflink-" + refID + "\">" + refID + "</a>] " + reftext + "</li>";
         }
-
+            
         this.onChangeBookContent(event, editor_textarea.value);
     }
 
