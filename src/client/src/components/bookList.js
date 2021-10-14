@@ -13,7 +13,11 @@ const Book = (props) => (
       <Link to={"/edit/" + props.book._id}> <button type="button"> Edit </button> </Link>
       <button type="button" href="/"
         onClick={() => {
-          props.deleteBook(props.book._id);
+          var answer = window.confirm("Are you sure you want to delete this book?");
+          if (answer) {
+            props.deleteBook(props.book._id);
+          }
+          
         }} > Delete </button>
     </td>
   </tr>
