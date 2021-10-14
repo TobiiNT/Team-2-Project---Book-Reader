@@ -119,7 +119,7 @@ class ManualEditor extends Component {
             ></textarea>
 
           </div>
-          <iframe srcDoc={this.state.html_display} />
+          <iframe id="left_pane" srcDoc={this.state.html_display} />
         </div>
       );
     }
