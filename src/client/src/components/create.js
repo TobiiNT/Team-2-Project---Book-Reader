@@ -2,7 +2,7 @@ import React, { Component} from "react";
 // This will require to npm install axios
 import axios from 'axios';
 import ManualEditor from './manualeditor.js';
-import "./App.css";
+
 
 export default class Create extends Component {
   // This is the constructor that stores the data.

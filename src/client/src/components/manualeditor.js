@@ -6,23 +6,28 @@ class ManualEditor extends Component {
       super(props);
   
       this.state = {
-        book_content: props.content,
+        content: props.content,
         html_display: ''
       };
     }
-  
+
     onChangeBookContent(event, content) {
+        event.preventDefault();
+
         this.setState({
-            book_content: content
+            content: content
         })
 
-        this.preview(event);
+        this.preview();
         this.props.onChange(content);
       }
   
-    preview(event) {
-      event.preventDefault();
-      let text_to_render = document.getElementById("editor_textarea").value;
+    preview() {      
+      let text_to_render = this.state.content;
+      
+      let container = document.getElementById("editor_textarea");
+      if (container != null)
+          text_to_render = document.getElementById("editor_textarea").value;
 
       text_to_render = text_to_render.replace(/\n/g, "<br>");
     
@@ -44,14 +49,8 @@ class ManualEditor extends Component {
       text_to_render = text_to_render.replace(/<style>/g, "");
       text_to_render = text_to_render.replace(/<\/style>/g, "");
     
-      //let render_div = document.getElementById("right_pane");
-    
-    console.log(text_to_render);
-
-      //render_div.innerHTML = 
-
         this.setState({
-            html_display: '<html><body>' + text_to_render +  '</body></html>'
+            html_display: text_to_render
         })
     }
   
@@ -73,7 +72,7 @@ class ManualEditor extends Component {
       else
         selection = editor_textarea.value.slice(editor_textarea.selectionStart, editor_textarea.selectionEnd);
       
-      if (tag_name != null)
+      if (tag_name != null && selection.length > 0)
         editor_textarea.setRangeText(`<${tag_name}>${selection}</${tag_name}>`);
 
         this.onChangeBookContent(event, editor_textarea.value);
@@ -113,7 +112,7 @@ class ManualEditor extends Component {
               <textarea
               id="editor_textarea"
               placeholder="Type in your text here"
-              value={this.props.book_content}
+              value={this.props.content}
               rows='10'
               onChange={(event) => this.onChangeBookContent(event, event.target.value)}
             ></textarea>

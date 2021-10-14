@@ -54,7 +54,7 @@ class Edit extends Component {
 
   onChangeBookContent(e) {
     this.setState({
-      book_content: e.target.value,
+      book_content: e,
     });
   }
 
@@ -67,7 +67,7 @@ class Edit extends Component {
       book_publishdate: this.state.book_publishdate,
       book_content: this.state.book_content,
     };
-    console.log(newEditedbook);
+    
 
     // This will send a post request to update the data in the database.
     axios
