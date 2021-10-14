@@ -10,13 +10,13 @@ class ManualEditor extends Component {
       };
     }
   
-    onChangeBookContent(data) {
-      this.setState({
-        book_content: data,
-      });
-  
-      this.props.onChange(data);
-    }
+    onChangeBookContent(content) {
+        this.setState({
+          textareaValue: content
+        })
+
+        this.props.onChange(content);
+      }
   
     preview(event) {
       event.preventDefault();
@@ -47,6 +47,13 @@ class ManualEditor extends Component {
       render_div.innerHTML = text_to_render;
     }
   
+    insertBold(event) { this.insertTag(event, "b"); }
+    insertItalic(event) { this.insertTag(event, "i"); }
+    insertUnderline(event) { this.insertTag(event, "ui"); }
+    insertFootnode(event) {
+        this.insertTag(event, "a href");
+    }
+
     insertTag(event, tag_name) {
       event.preventDefault();
       let editor_textarea = document.getElementById("editor_textarea");
@@ -58,26 +65,10 @@ class ManualEditor extends Component {
       else
         selection = editor_textarea.value.slice(editor_textarea.selectionStart, editor_textarea.selectionEnd);
       
-      console.log(selection);
-      switch (tag_name) {
-        case "strong":
-          tag_name = "strong";
-          break;
-      
-        case "italic":
-          tag_name = "i";
-          break;
-      
-        case "footnote":
-          tag_name = "a href";
-          break;
-        default:
-          tag_name = null;
-          break;
-      }
-      
       if (tag_name != null)
         editor_textarea.setRangeText(`<${tag_name}>${selection}</${tag_name}>`);
+
+        this.onChangeBookContent(editor_textarea.value);
     }
   
     render() {
@@ -93,7 +84,7 @@ class ManualEditor extends Component {
               <div className="inner">
                 <button
                   type="submit"
-                  onClick={(event) => this.insertTag(event, "strong")}
+                  onClick={(event) => this.insertBold(event)}
                 >
                   Bold
                 </button>
@@ -101,7 +92,7 @@ class ManualEditor extends Component {
               <div className="inner">
                 <button
                   type="submit"
-                  onClick={(event) => this.insertTag(event, "italic")}
+                  onClick={(event) => this.insertItalic(event)}
                 >
                   Italic
                 </button>
@@ -109,7 +100,15 @@ class ManualEditor extends Component {
               <div className="inner">
                 <button
                   type="submit"
-                  onClick={(event) => this.insertTag(event, "footnote")}
+                  onClick={(event) => this.insertUnderline(event)}
+                >
+                  Underline
+                </button>
+              </div>
+              <div className="inner">
+                <button
+                  type="submit"
+                  onClick={(event) => this.insertFootnode(event)}
                 >
                   Footnote
                 </button>
@@ -118,7 +117,8 @@ class ManualEditor extends Component {
             <textarea
               id="editor_textarea"
               placeholder="Type in your text here"
-              data={this.props.book_content}
+              value={this.props.book_content}
+              onChange={(event) => this.onChangeBookContent(event.target.value)}
             ></textarea>
           </div>
   
