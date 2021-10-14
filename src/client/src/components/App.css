@@ -33,3 +33,27 @@
     width: 300px;
     min-height: 600px;
 }
+#under{
+    background-image: url("under.png");
+    background-size: 25px 25px;
+    height: 30px;
+    width: 30px;
+}
+#italics{
+    background-image: url("italics.png");
+    background-size: 24px 24px;
+    height: 30px;
+    width: 30px;
+}
+#bold{
+    background-image: url("bold.png");
+    background-size: 26px 26px;
+    height: 30px;
+    width: 30px;
+}
+#footnote{
+    background-image: url("footnote.png");
+    background-size: 26px 26px;
+    height: 30px;
+    width: 30px;
+}
