@@ -31,9 +31,9 @@ class Read extends Component {
       .catch(function (error) {
         console.log(error);
       });
-  }
 
-  // This following section will display the update-form that takes the input from the user to update the data.
+      
+  }
   render() {
     if (!(this.props.match.params.id in localStorage)) {
       var obj = {
