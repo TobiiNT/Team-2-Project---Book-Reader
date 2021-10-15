@@ -8,10 +8,6 @@ class ManualEditor extends Component {
             content: props.content,
             html_display: ''
         };
-
-        let Regex = new RegExp('(?<=[)(.*?)(?=])');
-        var myArray = this.state.content.match(Regex);
-        console.log(myArray);
     }
 
     onChangeBookContent(event, content) {
