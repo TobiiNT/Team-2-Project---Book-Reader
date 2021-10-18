@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
@@ -36,8 +36,11 @@ class Read extends Component {
   // This following section will display the update-form that takes the input from the user to update the data.
   render() {
     return (
-      <div
-        dangerouslySetInnerHTML={{ __html: this.state.book_content }}></div>
+      <div>
+        <form>
+        <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
+        </form>
+      </div>
     );
   }
 }
