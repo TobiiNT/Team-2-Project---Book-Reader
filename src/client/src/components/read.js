@@ -58,7 +58,7 @@ class Read extends Component {
           </span>
         </div>
       </div>
-      <div ref={(e) => this.setScrollTop(st, e)} onScroll={(e) => this.updateScrollTop(this.props.match.params.id, e)} style={{overflow:"scroll", height:"45vw"}} id="contain" >
+      <div ref={(e) => this.setScrollTop(st, e)} onScroll={(e) => this.updateScrollTop(this.props.match.params.id, e)} style={{overflow:"scroll", height:"45vh"}} id="contain" >
           
           <div className="form-group" id="read" style={{fontSize:font_size,fontFamily:font}}>
             <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
