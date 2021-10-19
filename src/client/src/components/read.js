@@ -32,9 +32,9 @@ class Read extends Component {
       .catch(function (error) {
         console.log(error);
       });
-  }
 
-  // This following section will display the update-form that takes the input from the user to update the data.
+      
+  }
   render() {
     if (!(this.props.match.params.id in localStorage)) {
       var obj = {
@@ -49,6 +49,7 @@ class Read extends Component {
     let font = data.font;
     let font_size=data.font_size;
     return (
+    <div>
       <div>
         <form>
         <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
@@ -82,6 +83,11 @@ class Read extends Component {
   setScrollTop (st){
     document.getElementById('contain').scrollTop = st;
   }
+  updateScrollTop (id) {
+    var ele = document.getElementById('contain');
+    var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+    data.scroll = ele.scrollTop;
+    localStorage.setItem(id, JSON.stringify(data));
   setBookmark(){
     var ele = document.getElementById('contain');
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
@@ -111,6 +117,7 @@ class Read extends Component {
   upTextSize () {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     data.font_size *= 2;
+
     data.bookmark *= 2;
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
