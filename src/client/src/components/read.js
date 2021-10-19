@@ -106,6 +106,7 @@ class Read extends Component {
   upTextSize () {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     data.font_size *= 2;
+    data.bookmark *= 2;
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
@@ -115,6 +116,7 @@ class Read extends Component {
   downTextSize () {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     data.font_size *= 0.5;
+    data.bookmark *=0.5;
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
