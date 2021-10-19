@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "./styles/App.css";
+
 class ManualEditor extends Component {
     constructor(props) {
         super(props);
@@ -121,3 +122,4 @@ class ManualEditor extends Component {
 }
 
 export default ManualEditor;
+

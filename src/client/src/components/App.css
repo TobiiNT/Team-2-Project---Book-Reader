@@ -1,0 +1,59 @@
+#page_container{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#right_pane{
+    flex: 1;
+    display: inline-flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    padding: 20px; 
+    width: 300px;
+    min-height: 600px;
+    word-wrap: break-word;
+}
+
+#editor_textarea{
+    flex: 1;
+    font-size: 18px;
+    resize: inherit;
+    overflow: auto;
+}
+
+#left_pane{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    resize: both;
+    overflow: auto;
+    padding: 20px; 
+    width: 300px;
+    min-height: 600px;
+}
+#under{
+    background-image: url("under.png");
+    background-size: 25px 25px;
+    height: 30px;
+    width: 30px;
+}
+#italics{
+    background-image: url("italics.png");
+    background-size: 24px 24px;
+    height: 30px;
+    width: 30px;
+}
+#bold{
+    background-image: url("bold.png");
+    background-size: 26px 26px;
+    height: 30px;
+    width: 30px;
+}
+#footnote{
+    background-image: url("footnote.png");
+    background-size: 26px 26px;
+    height: 30px;
+    width: 30px;
+}

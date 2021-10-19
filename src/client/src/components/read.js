@@ -3,6 +3,7 @@ import React,  {Component}  from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
 
+
 class Read extends Component {
   // This is the constructor that stores the data.
   constructor(props) {
@@ -39,7 +40,8 @@ class Read extends Component {
       var obj = {
         "scroll": "0px",
         "font_size": 64,
-        "font": "Calibri"};
+        "font": "Calibri",
+        "bookmark": "0px"};
       localStorage.setItem(this.props.match.params.id, JSON.stringify(obj));
     } 
     let data = JSON.parse(localStorage.getItem(this.props.match.params.id));
@@ -49,18 +51,29 @@ class Read extends Component {
     return (
     <div>
       <div>
+        <form>
+        <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
+        </form>
+      </div>
+    <div>
+      <div>
         <div>
           <button type="button" onClick={() => this.updateFont( "Times New Roman")}>TimesNewRoman</button>
           <button type="button" onClick={() => this.updateFont( "Calibri")}>Calibri</button>
           <span style={{float:"right"}}>
-            <button type="button" align="right" onClick={() => this.upTextSize()}><b>+</b></button>
+            <button type="button" onClick={()=> this.setBookmark()}>Set bookmark</button>
+            <button type="button" align="right" onClick={() => this.upTextSize()}><strong>+</strong></button>
             <button type="button" align="right" onClick={() => this.downTextSize()}><b>-</b></button>
           </span>
+          <div>
+            <button type="button" align="right" onClick={()=>this.toBookmark()}>To last saved bookmark</button>
+          </div>
         </div>
+        
       </div>
-      <div ref={(e) => this.setScrollTop(st, e)} onScroll={(e) => this.updateScrollTop(this.props.match.params.id, e)} style={{overflow:"scroll", height:"45vh"}} id="contain" >
-          
-          <div className="form-group" id="read" style={{fontSize:font_size,fontFamily:font}}>
+      <div ref={(e) => this.setScrollTop(st, e)} onScroll={(e) => this.updateScrollTop()} style={{overflow:"scroll", height:"45vw"}} id="contain" >
+          <div className="form-group" id="read" style={{fontSize: font_size, fontFamily:font}}
+          data-toggle="collapse" data-target="#setBookmarkButton">
             <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
           </div>
       </div>
@@ -75,6 +88,23 @@ class Read extends Component {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     data.scroll = ele.scrollTop;
     localStorage.setItem(id, JSON.stringify(data));
+  setBookmark(){
+    var ele = document.getElementById('contain');
+    var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+    data.bookmark = ele.scrollTop;
+    localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
+  }
+  toBookmark(){
+    var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+    data.scroll = data.bookmark;
+    localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
+    window.location.reload();
+  }
+  updateScrollTop () {
+    var ele = document.getElementById('contain');
+    var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+    data.scroll = ele.scrollTop;
+    localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
   }
   updateFont (font) {
     var ele = document.getElementById('read');
@@ -87,6 +117,8 @@ class Read extends Component {
   upTextSize () {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     data.font_size *= 2;
+
+    data.bookmark *= 2;
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
@@ -96,6 +128,7 @@ class Read extends Component {
   downTextSize () {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     data.font_size *= 0.5;
+    data.bookmark *=0.5;
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
