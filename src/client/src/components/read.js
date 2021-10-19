@@ -49,6 +49,11 @@ class Read extends Component {
     let font = data.font;
     let font_size=data.font_size;
     return (
+      <div>
+        <form>
+        <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
+        </form>
+      </div>
     <div>
       <div>
         <div>
