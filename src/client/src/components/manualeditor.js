@@ -28,28 +28,15 @@ class ManualEditor extends Component {
         if (container != null)
             text_to_render = document.getElementById("editor_textarea").value;
 
-        text_to_render = text_to_render.replace(/\n/g, "<br>");
+        let arrays = text_to_render.split('\n');
 
-        text_to_render = text_to_render.replace(/<script>/g, "");
-        text_to_render = text_to_render.replace(/<\/script>/g, "");
-
-        text_to_render = text_to_render.replace(/<link>/g, "");
-        text_to_render = text_to_render.replace(/<\/link>/g, "");
-
-        text_to_render = text_to_render.replace(/<div>/g, "");
-        text_to_render = text_to_render.replace(/<\/div>/g, "");
-
-        text_to_render = text_to_render.replace(/<p>/g, "");
-        text_to_render = text_to_render.replace(/<\/p>/g, "");
-
-        text_to_render = text_to_render.replace(/<span>/g, "");
-        text_to_render = text_to_render.replace(/<\/span>/g, "");
-
-        text_to_render = text_to_render.replace(/<style>/g, "");
-        text_to_render = text_to_render.replace(/<\/style>/g, "");
+        let paragraphtext = "";
+        arrays.forEach(element => {
+            paragraphtext += '<p>' + element + '</p>'
+        });
 
         this.setState({
-            html_display: text_to_render
+            html_display: paragraphtext
         })
     }
 
