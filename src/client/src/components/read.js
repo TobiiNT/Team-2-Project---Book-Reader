@@ -51,12 +51,6 @@ class Read extends Component {
     return (
     <div>
       <div>
-        <form>
-        <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
-        </form>
-      </div>
-    <div>
-      <div>
         <div>
           <button type="button" onClick={() => this.updateFont( "Times New Roman")}>TimesNewRoman</button>
           <button type="button" onClick={() => this.updateFont( "Calibri")}>Calibri</button>
@@ -88,6 +82,7 @@ class Read extends Component {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     data.scroll = ele.scrollTop;
     localStorage.setItem(id, JSON.stringify(data));
+  }
   setBookmark(){
     var ele = document.getElementById('contain');
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
