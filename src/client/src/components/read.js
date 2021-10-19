@@ -95,12 +95,6 @@ class Read extends Component {
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
     window.location.reload();
   }
-  updateScrollTop () {
-    var ele = document.getElementById('contain');
-    var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
-    data.scroll = ele.scrollTop;
-    localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
-  }
   updateFont (font) {
     var ele = document.getElementById('read');
     ele.style.fontFamily = font;
