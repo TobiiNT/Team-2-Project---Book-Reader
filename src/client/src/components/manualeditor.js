@@ -28,15 +28,13 @@ class ManualEditor extends Component {
         if (container != null)
             text_to_render = document.getElementById("editor_textarea").value;
 
-        //text_to_render = text_to_render.replace(/\n/g, "<br>");
-        //text_to_render = text_to_render.replace(/<p>(.*)<\/p>/g, "$1<br />"); //$1 here contains all the html between the <p> tags. So you can change this around to what you want it to be, example: <a>$1</a>
-
         let arrays = text_to_render.split('\n');
-        
+
         let paragraphtext = "";
         arrays.forEach(element => {
             paragraphtext += '<p>' + element + '</p>'
         });
+
         this.setState({
             html_display: paragraphtext
         })
