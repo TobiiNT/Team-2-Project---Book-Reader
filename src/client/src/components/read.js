@@ -32,9 +32,9 @@ class Read extends Component {
       .catch(function (error) {
         console.log(error);
       });
-
-      
   }
+
+  // This following section will display the update-form that takes the input from the user to update the data.
   render() {
     if (!(this.props.match.params.id in localStorage)) {
       var obj = {
@@ -49,12 +49,6 @@ class Read extends Component {
     let font = data.font;
     let font_size=data.font_size;
     return (
-    <div>
-      <div>
-        <form>
-        <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
-        </form>
-      </div>
     <div>
       <div>
         <div>
@@ -88,17 +82,27 @@ class Read extends Component {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     data.scroll = ele.scrollTop;
     localStorage.setItem(id, JSON.stringify(data));
+  }
   setBookmark(){
     var ele = document.getElementById('contain');
-    var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
-    data.bookmark = ele.scrollTop;
-    localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
+    var pList = ele.getElementsByTagName('p');
+    for(var i=0; i<=pList.length; i++){      
+      if(this.isInViewport(pList[i])){
+        var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+        data.bookmark = i;
+        console.log(data);
+        localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
+        break;
+      }
+    }
   }
   toBookmark(){
+    var ele = document.getElementById('contain');
+    var pList = ele.getElementsByTagName('p');
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
-    data.scroll = data.bookmark;
-    localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
-    window.location.reload();
+    var pIndex = parseInt(data.bookmark);
+    console.log(pIndex);
+    pList[pIndex].scrollIntoView(); 
   }
   updateScrollTop () {
     var ele = document.getElementById('contain');
@@ -134,7 +138,17 @@ class Read extends Component {
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
     window.location.reload();
   }
+  isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
 }
+
 
 // You can get access to the history object's properties and the closest <Route>'s match via the withRouter
 // higher-order component. This makes it easier for us to edit our books.
