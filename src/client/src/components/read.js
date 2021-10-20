@@ -183,9 +183,8 @@ class Read extends Component {
   isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
-        (rect.bottom > 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)) ||
-        (rect.top > 0 && rect.top <= (window.innerHeight || document.documentElement.clientHeight)) ||
-        (rect.top < 0 && rect.bottom >= (window.innerHeight || document.documentElement.clientHeight))
+      (rect.top >= 0 && rect.top <= (window.innerHeight || document.documentElement.clientHeight)) ||
+      (rect.bottom >= (window.innerHeight/2 || document.documentElement.clientHeight/2))
     );
   }
 
