@@ -23,10 +23,18 @@ class Read extends Component {
     axios
       .get("http://localhost:5000/book/" + this.props.match.params.id)
       .then((response) => {
+
+        let arrays = response.data.book_content.split('\n');
+        console.log(arrays);
+        let paragraphtext = "";
+        arrays.forEach(element => {
+            paragraphtext += '<p>' + element + '</p>'
+        });
+        
         this.setState({
           book_title: response.data.book_title,
           book_author: response.data.book_author,
-          book_content: response.data.book_content,
+          book_content: paragraphtext,
           book_publishdate: response.data.book_publishdate,
         });
         this.toLastPosition();
