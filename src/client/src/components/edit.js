@@ -54,7 +54,7 @@ class Edit extends Component {
 
   onChangeBookContent(e) {
     this.setState({
-      book_content: e.target.value,
+      book_content: e,
     });
   }
 
