@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "./styles/App.css";
-
+import "bootstrap/dist/js/bootstrap.bundle.js";
 class ManualEditor extends Component {
     constructor(props) {
         super(props);
@@ -40,7 +40,9 @@ class ManualEditor extends Component {
             html_display: paragraphtext
         })
     }
-
+    insertH1(event) { this.insertTag(event, "h1"); }
+    insertH2(event) { this.insertTag(event, "h2"); }
+    insertH3(event) { this.insertTag(event, "h3"); }
     insertBold(event) { this.insertTag(event, "strong"); }
     insertItalic(event) { this.insertTag(event, "em"); }
     insertUnderline(event) { this.insertTag(event, "u"); }
@@ -84,6 +86,14 @@ class ManualEditor extends Component {
             <div className="App" id="page_container">
                 <div id="left_pane">
                     <span id="editor_controls">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" align="center">
+                        </button>
+                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                         <button class="dropdown-item" type="submit" onClick={(event) => this.insertH1(event)}>Heading 1</button>
+                         <button class="dropdown-item" type="submit" onClick={(event) => this.insertH2(event)}>Heading 2</button>
+                         <button class="dropdown-item" type="submit" onClick={(event) => this.insertH3(event)}>Heading 3</button>
+                        </div>
+                        
                         <button id="bold"
                             type="submit"
                             onClick={(event) => this.insertBold(event)}

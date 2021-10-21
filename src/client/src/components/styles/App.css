@@ -58,6 +58,14 @@
     width: 30px;
 }
 
+#dropdownMenu2{
+    background-image: url("heading.png");
+    background-size: 26px 26px;
+    height: 30px;
+    width: 30px;
+    margin-top: -15px;
+}
+
 #booklogo {
     height: 50px;
     Width: 50px;
