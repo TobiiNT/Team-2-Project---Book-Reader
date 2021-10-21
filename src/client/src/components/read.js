@@ -28,6 +28,7 @@ class Read extends Component {
           book_content: response.data.book_content,
           book_publishdate: response.data.book_publishdate,
         });
+        this.toLastPosition()
       })
       .catch(function (error) {
         console.log(error);
@@ -38,7 +39,7 @@ class Read extends Component {
   render() {
     if (!(this.props.match.params.id in localStorage)) {
       var obj = {
-        "scroll": "0px",
+        "lastPosition": 0,
         "font_size": 64,
         "font": "Calibri",
         "bookmarkList": "[]",
@@ -69,7 +70,7 @@ class Read extends Component {
         </div>
         
       </div>
-      <div ref={(e) => this.setScrollTop(st, e)} onScroll={(e) => this.updateScrollTop()} style={{overflow:"scroll", height:"85vh"}} id="contain" >
+      <div onScroll={(e) => this.updateLastPosition()} style={{overflow:"scroll", height:"85vh"}} id="contain" >
           <div className="form-group" id="read" style={{fontSize: font_size, fontFamily:font}}
           data-toggle="collapse" data-target="#setBookmarkButton">
             <div dangerouslySetInnerHTML={{__html: this.state.book_content}} />
@@ -78,9 +79,7 @@ class Read extends Component {
     </div>
     );
   }
-  setScrollTop (st){
-    document.getElementById('contain').scrollTop = st;
-  }
+  
   setBookmark(){
     var ele = document.getElementById('contain');
     var pList = ele.getElementsByTagName('p');
@@ -182,18 +181,33 @@ class Read extends Component {
   }
   isInViewport(element) {
     const rect = element.getBoundingClientRect();
+    const readRect=document.getElementById('contain').getBoundingClientRect();
     return (
-      (rect.top >= 0 && rect.top <= (window.innerHeight || document.documentElement.clientHeight)) ||
-      (rect.bottom >= (window.innerHeight/2 || document.documentElement.clientHeight/2))
+      (rect.top > readRect.top && rect.top <= readRect.bottom) ||
+      (rect.bottom > readRect.bottom/2)
     );
   }
-
-  updateScrollTop () {
+  toLastPosition (){
     var ele = document.getElementById('contain');
+    var pList = ele.getElementsByTagName('p');
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
-    data.scroll = ele.scrollTop;
-    localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
+    pList[parseInt(data.lastPosition)].scrollIntoView(); 
+    console.log(localStorage.getItem(this.props.match.params.id));
   }
+  updateLastPosition () {
+    var ele = document.getElementById('contain');
+    var pList = ele.getElementsByTagName('p');
+    for(var i=0; i<=pList.length; i++){      
+      if(this.isInViewport(pList[i])){
+        var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+        data.lastPosition = JSON.stringify(i);
+        localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
+        break;
+      }
+    }
+    console.log(localStorage.getItem(this.props.match.params.id));
+  }
+
   updateFont (font) {
     var ele = document.getElementById('read');
     ele.style.fontFamily = font;
@@ -206,7 +220,6 @@ class Read extends Component {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     data.font_size *= 2;
 
-    data.bookmark *= 2;
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
@@ -216,7 +229,6 @@ class Read extends Component {
   downTextSize () {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     data.font_size *= 0.5;
-    data.bookmark *=0.5;
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
