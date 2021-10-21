@@ -115,8 +115,10 @@ class Read extends Component {
 
   //Check if a paragraph is clicked//////////////////////////////////////////////////////
   isClicked(element,X,Y){
-    const rect = element.getBoundingClientRect();
-    return (rect.top<=Y && rect.bottom>Y && rect.left<=X && rect.right>=X)
+    if (element != null) {
+      const rect = element.getBoundingClientRect();
+      return (rect.top<=Y && rect.bottom>Y && rect.left<=X && rect.right>=X)
+    }
   }
 
   //Set bookmark/////////////////////////////////////////////////////////////////////////
