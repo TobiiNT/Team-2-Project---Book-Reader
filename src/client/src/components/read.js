@@ -393,7 +393,7 @@ class Read extends Component {
   //Increase text font size++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   upTextSize () {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
-    data.font_size += 2;
+    data.font_size += 1;
 
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
@@ -404,15 +404,11 @@ class Read extends Component {
   //Reduce text font size----------------------------------------------------------------
   downTextSize () {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
-    if (data.fontSize > 8)
-    {
-      data.font_size -= 2;
+    data.font_size -= 1;
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
     window.location.reload();
-    }
-    
   }
 }
 
