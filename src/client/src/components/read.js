@@ -58,23 +58,29 @@ class Read extends Component {
     let font = data.font;
     let font_size=data.font_size;
     return (
-    <div style={{backgroundColor:"rgba(115,130,0,0.5)"}}>
+    <div style={{backgroundColor:"rgba(150,165,35,0.5)"}}>
       <div id="extraNote" style={{position:"fixed", bottom: "50%", padding:"10px", maxWidth:"25%", overflow:"auto", display:"none", backgroundColor:"rgba(127,143,63,0.9)", border:"2px solid black"}}>
         <span>Bookmark</span><br/>
         <button type="button" style={{backgroundColor:"rgba(255,0,0,0.5)"}} onClick={() => this.deleteBookmark(-1)}>X</button>
       </div>
       <div>
         <div>
-          <button type="button" onClick={() => this.updateFont( "Times New Roman")}>TimesNewRoman</button>
-          <button type="button" onClick={() => this.updateFont( "Calibri")}>Calibri</button>
-          <span style={{float:"right"}}>
-            <button type="button" onClick={()=> this.setBookmark()} id="setbookmark">SetBookMark({this.state.lastClickedP})</button>
+        <label for="font">Font: &nbsp;</label>
+        <select name="font" id="font" onChange={() => this.updateFont(document.getElementById('font').value)}>
+          <option value="Calibri">Calibri</option>
+          <option value="Times New Roman">Times New Roman</option>
+        </select>
+        &nbsp;
+        <label>Font size: {font_size} &nbsp;</label>
             <button type="button" align="right" onClick={() => this.upTextSize()}><strong>+</strong></button>
             <button type="button" align="right" onClick={() => this.downTextSize()}><b>-</b></button>
+          <span style={{float:"right"}}>
             <button type="button" align="right" onClick={() => this.highlightSelection()}><b>Highlight</b></button>
           </span>
         </div>
+        <br/>
         <div align="right">
+          <button type="button" onClick={()=> this.setBookmark()} id="setbookmark">SetBookMark({this.state.lastClickedP})</button>
           <button type="button" onClick={()=>this.showList()} id="showlist">Bookmark list v</button>
           <div><table id="bookmarklistbutton" style={{display:"none"}}></table></div>
         </div>
@@ -159,11 +165,11 @@ class Read extends Component {
     var a = dangerous.commonAncestorContainer;
     // Starts -- Work inward from the start, selecting the largest safe range
     var s = new Array(0), rs = new Array(0);
-    if (dangerous.startContainer != a)
-        for(var i = dangerous.startContainer; i != a; i = i.parentNode)
+    if (dangerous.startContainer !== a)
+        for(var i = dangerous.startContainer; i !== a; i = i.parentNode)
             s.push(i)
     ;
-    if (0 < s.length) for(var i = 0; i < s.length; i++) {
+    if (0 < s.length) for(i = 0; i < s.length; i++) {
         var xs = document.createRange();
         if (i) {
             xs.setStartAfter(s[i-1]);
@@ -172,7 +178,7 @@ class Read extends Component {
         else {
             xs.setStart(s[i], dangerous.startOffset);
             xs.setEndAfter(
-                (s[i].nodeType == Node.TEXT_NODE)
+                (s[i].nodeType === Node.TEXT_NODE)
                 ? s[i] : s[i].lastChild
             );
         }
@@ -181,11 +187,11 @@ class Read extends Component {
 
     // Ends -- basically the same code reversed
     var e = new Array(0), re = new Array(0);
-    if (dangerous.endContainer != a)
-        for(var i = dangerous.endContainer; i != a; i = i.parentNode)
+    if (dangerous.endContainer !== a)
+        for( i = dangerous.endContainer; i !== a; i = i.parentNode)
             e.push(i)
     ;
-    if (0 < e.length) for(var i = 0; i < e.length; i++) {
+    if (0 < e.length) for( i = 0; i < e.length; i++) {
         var xe = document.createRange();
         if (i) {
             xe.setStartBefore(e[i].firstChild);
@@ -193,7 +199,7 @@ class Read extends Component {
         }
         else {
             xe.setStartBefore(
-                (e[i].nodeType == Node.TEXT_NODE)
+                (e[i].nodeType === Node.TEXT_NODE)
                 ? e[i] : e[i].firstChild
             );
             xe.setEnd(e[i], dangerous.endOffset);
@@ -269,14 +275,14 @@ class Read extends Component {
       var bookmark = document.createElement("tr");
       var bookmarkInfo = document.createElement("td");
       bookmarkInfo.innerHTML = "Paragraph "+key+"| Note: "+bookmarkList[key];
-      bookmarkInfo.style.backgroundColor = "yellow";
+      bookmarkInfo.style.backgroundColor = "rgba(150,165,35,0.25)";
       bookmarkInfo.addEventListener("click", () => this.toBookmark(key));
       bookmarkInfo.style.cursor = "pointer";
       bookmark.appendChild(bookmarkInfo);
       var Option2 = document.createElement("td");
       var deleteButton = document.createElement("button");
       deleteButton.innerHTML = "Delete";
-      deleteButton.style.backgroundColor = "red";
+      deleteButton.style.backgroundColor = "rgba(200,0,0,0.5)";
       deleteButton.addEventListener("click", () => this.deleteBookmark(key));
       Option2.appendChild(deleteButton)
       bookmark.appendChild(Option2)
