@@ -58,7 +58,7 @@ class ManualEditor extends Component {
             let selection = editor_textarea.value.slice(editor_textarea.selectionStart, editor_textarea.selectionEnd);
 
             editor_textarea.setRangeText(selection + "<a id=\"reflink-" + refID + "\" href=\"#refid-" + refID + "\"><sup>[" + refID + "]</sup></a>");
-            editor_textarea.value += "\r\n<li id=\"refid-" + refID + "\"> [<a href=\"reflink-" + refID + "\">" + refID + "</a>] " + reftext + "</li>";
+            editor_textarea.value += "\r\n<li id=\"refid-" + refID + "\"> [" + refID + "] " + reftext + "</li>";
         }
             
         this.onChangeBookContent(event, editor_textarea.value);
