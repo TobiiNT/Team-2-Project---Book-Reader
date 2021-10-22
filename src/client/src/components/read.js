@@ -57,7 +57,11 @@ class Read extends Component {
     let font = data.font;
     let font_size=data.font_size;
     return (
-    <div>
+    <div style={{backgroundColor:"rgba(115,130,0,0.5)"}}>
+      <div id="extraNote" style={{position:"fixed", bottom: "50%", padding:"10px", maxWidth:"25%", overflow:"auto", display:"none", backgroundColor:"rgba(127,143,63,0.9)", border:"2px solid black"}}>
+        <span>Bookmark</span><br/>
+        <button type="button" style={{backgroundColor:"rgba(255,0,0,0.5)"}} onClick={() => this.deleteBookmark(-1)}>X</button>
+      </div>
       <div>
         <div>
           <button type="button" onClick={() => this.updateFont( "Times New Roman")}>TimesNewRoman</button>
@@ -128,12 +132,18 @@ class Read extends Component {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
     var bookmarkList = JSON.parse(data.bookmarkList); 
     bookmarkList = this.addAndSort(bookmarkList, this.state.lastClickedP, name);
+
+    if (this.state.lastClickedP === parseInt(data.lastPosition)){
+      document.getElementById("extraNote").style.display = "block";
+      document.getElementById("extraNote").firstChild.innerHTML = "|Note: "+bookmarkList[this.state.lastClickedP];
+    }
+
     data.bookmarkList = JSON.stringify(bookmarkList);
-    //document.getElementById("bookmarklist").innerHTML = JSON.stringify(bookmarkList);
     this.changeBookMarkList(bookmarkList);
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
     console.log(localStorage.getItem(this.props.match.params.id));
   }
+
   //Addition for setBookmark()
   addAndSort(bookmarkList, index, name) {
     var sortList = {};
@@ -158,6 +168,7 @@ class Read extends Component {
       bookmarkInfo.innerHTML = "Paragraph "+key+"| Note: "+bookmarkList[key];
       bookmarkInfo.style.backgroundColor = "yellow";
       bookmarkInfo.addEventListener("click", () => this.toBookmark(key));
+      bookmarkInfo.style.cursor = "pointer";
       bookmark.appendChild(bookmarkInfo);
       var Option2 = document.createElement("td");
       var deleteButton = document.createElement("button");
@@ -183,9 +194,16 @@ class Read extends Component {
     console.log(localStorage.getItem(this.props.match.params.id));
   }
   
+
   //Delete a bookmark////////////////////////////////////////////////////////////////////
   deleteBookmark(pIndex){
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
+    if (pIndex === -1){ //-1 is extra note
+      pIndex = data.lastPosition;
+    }
+    if (pIndex === data.lastPosition){
+      document.getElementById("extraNote").style.display = "none";
+    }
     var bookmarkList = JSON.parse(data.bookmarkList);
     var currentIndex = parseInt(data.currentBookmark);
     if(pIndex !== "None" && Object.keys(bookmarkList).length>0 && Object.keys(bookmarkList).indexOf(pIndex)>-1){
@@ -239,7 +257,15 @@ class Read extends Component {
       if(this.isInViewport(pList[i])){
         var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
         data.lastPosition = JSON.stringify(i);
+        var bookmarkList = JSON.parse(data.bookmarkList);
         localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
+        if(bookmarkList[i] !== undefined){
+          document.getElementById("extraNote").firstChild.innerHTML = "|Note: "+bookmarkList[i];
+          document.getElementById("extraNote").style.display = "block";
+        }
+        else{
+          document.getElementById("extraNote").style.display = "none";
+        }
         break;
       }
     }
