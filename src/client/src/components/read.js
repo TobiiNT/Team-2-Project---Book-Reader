@@ -37,6 +37,7 @@ class Read extends Component {
         });
         this.toLastPosition();
         this.changeBookMarkList(JSON.parse(JSON.parse(localStorage.getItem(this.props.match.params.id)).bookmarkList))
+        this.highlightLocalStorageSelection();
       })
       .catch(function (error) {
         console.log(error);
@@ -70,6 +71,7 @@ class Read extends Component {
             <button type="button" onClick={()=> this.setBookmark()} id="setbookmark">SetBookMark({this.state.lastClickedP})</button>
             <button type="button" align="right" onClick={() => this.upTextSize()}><strong>+</strong></button>
             <button type="button" align="right" onClick={() => this.downTextSize()}><b>-</b></button>
+            <button type="button" align="right" onClick={() => this.highlightSelection()}><b>Highlight</b></button>
           </span>
         </div>
         <div align="right">
@@ -116,6 +118,107 @@ class Read extends Component {
       }
     }
   }
+
+ highlightRange(range) {
+    var newNode = document.createElement("div");
+    newNode.setAttribute(
+       "style",
+       "background-color: yellow; display: inline;"
+    );
+    
+    range.surroundContents(newNode);
+}
+
+
+ highlightSelection() {
+  var selection = window.getSelection && window.getSelection();
+   
+   if (selection && selection.rangeCount > 0)
+   {
+    var userSelection = window.getSelection().getRangeAt(0);
+    var safeRanges = this.getSafeRanges(userSelection);
+    
+    localStorage.setItem('highlight', safeRanges);
+
+    for (var i = 0; i < safeRanges.length; i++) {
+        this.highlightRange(safeRanges[i]);
+    }
+   }
+    
+  }
+
+  highlightLocalStorageSelection() {
+    var safeRanges = localStorage.getItem('highlight');
+    for (var i = 0; i < safeRanges.length; i++) {
+        this.highlightRange(safeRanges[i]);
+    }
+  }
+
+ getSafeRanges(dangerous) {
+   var response = null;
+    var a = dangerous.commonAncestorContainer;
+    // Starts -- Work inward from the start, selecting the largest safe range
+    var s = new Array(0), rs = new Array(0);
+    if (dangerous.startContainer != a)
+        for(var i = dangerous.startContainer; i != a; i = i.parentNode)
+            s.push(i)
+    ;
+    if (0 < s.length) for(var i = 0; i < s.length; i++) {
+        var xs = document.createRange();
+        if (i) {
+            xs.setStartAfter(s[i-1]);
+            xs.setEndAfter(s[i].lastChild);
+        }
+        else {
+            xs.setStart(s[i], dangerous.startOffset);
+            xs.setEndAfter(
+                (s[i].nodeType == Node.TEXT_NODE)
+                ? s[i] : s[i].lastChild
+            );
+        }
+        rs.push(xs);
+    }
+
+    // Ends -- basically the same code reversed
+    var e = new Array(0), re = new Array(0);
+    if (dangerous.endContainer != a)
+        for(var i = dangerous.endContainer; i != a; i = i.parentNode)
+            e.push(i)
+    ;
+    if (0 < e.length) for(var i = 0; i < e.length; i++) {
+        var xe = document.createRange();
+        if (i) {
+            xe.setStartBefore(e[i].firstChild);
+            xe.setEndBefore(e[i-1]);
+        }
+        else {
+            xe.setStartBefore(
+                (e[i].nodeType == Node.TEXT_NODE)
+                ? e[i] : e[i].firstChild
+            );
+            xe.setEnd(e[i], dangerous.endOffset);
+        }
+        re.unshift(xe);
+    }
+
+    // Middle -- the uncaptured middle
+    if ((0 < s.length) && (0 < e.length)) {
+        var xm = document.createRange();
+        xm.setStartAfter(s[s.length - 1]);
+        xm.setEndBefore(e[e.length - 1]);
+    }
+    else {
+        return [dangerous];
+    }
+
+    // Concat
+    rs.push(xm);
+    response = rs.concat(re);    
+
+    // Send to Console
+    return response;
+}
+
 
   //Check if a paragraph is clicked//////////////////////////////////////////////////////
   isClicked(element,X,Y){
@@ -284,7 +387,7 @@ class Read extends Component {
   //Increase text font size++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   upTextSize () {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
-    data.font_size *= 2;
+    data.font_size += 1;
 
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
@@ -295,7 +398,7 @@ class Read extends Component {
   //Reduce text font size----------------------------------------------------------------
   downTextSize () {
     var data = JSON.parse(localStorage.getItem(this.props.match.params.id));
-    data.font_size *= 0.5;
+    data.font_size -= 1;
     var ele = document.getElementById('read');
     ele.style.fontSize = data.font_size;
     localStorage.setItem(this.props.match.params.id, JSON.stringify(data));
