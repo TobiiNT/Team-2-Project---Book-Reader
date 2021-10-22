@@ -159,11 +159,11 @@ class Read extends Component {
     var a = dangerous.commonAncestorContainer;
     // Starts -- Work inward from the start, selecting the largest safe range
     var s = new Array(0), rs = new Array(0);
-    if (dangerous.startContainer != a)
-        for(var i = dangerous.startContainer; i != a; i = i.parentNode)
+    if (dangerous.startContainer !== a)
+        for(var i = dangerous.startContainer; i !== a; i = i.parentNode)
             s.push(i)
     ;
-    if (0 < s.length) for(var i = 0; i < s.length; i++) {
+    if (0 < s.length) for(i = 0; i < s.length; i++) {
         var xs = document.createRange();
         if (i) {
             xs.setStartAfter(s[i-1]);
@@ -172,7 +172,7 @@ class Read extends Component {
         else {
             xs.setStart(s[i], dangerous.startOffset);
             xs.setEndAfter(
-                (s[i].nodeType == Node.TEXT_NODE)
+                (s[i].nodeType === Node.TEXT_NODE)
                 ? s[i] : s[i].lastChild
             );
         }
@@ -181,11 +181,11 @@ class Read extends Component {
 
     // Ends -- basically the same code reversed
     var e = new Array(0), re = new Array(0);
-    if (dangerous.endContainer != a)
-        for(var i = dangerous.endContainer; i != a; i = i.parentNode)
+    if (dangerous.endContainer !== a)
+        for( i = dangerous.endContainer; i !== a; i = i.parentNode)
             e.push(i)
     ;
-    if (0 < e.length) for(var i = 0; i < e.length; i++) {
+    if (0 < e.length) for( i = 0; i < e.length; i++) {
         var xe = document.createRange();
         if (i) {
             xe.setStartBefore(e[i].firstChild);
@@ -193,7 +193,7 @@ class Read extends Component {
         }
         else {
             xe.setStartBefore(
-                (e[i].nodeType == Node.TEXT_NODE)
+                (e[i].nodeType === Node.TEXT_NODE)
                 ? e[i] : e[i].firstChild
             );
             xe.setEnd(e[i], dangerous.endOffset);
